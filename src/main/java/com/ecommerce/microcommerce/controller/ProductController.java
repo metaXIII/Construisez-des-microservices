@@ -6,6 +6,8 @@ import com.ecommerce.microcommerce.model.Product;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,14 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@Deprecated
+@Api(description = "API pour les opérations crud sur les produits")
 public class ProductController {
 
     @Autowired
     private ProductDao productDao;
 
+    @ApiOperation(value = "Récupère les produits en stock!")
     @GetMapping("/Produits")
     public MappingJacksonValue listeProduits() {
         log.info("Retourne la liste des produits");
@@ -36,6 +41,7 @@ public class ProductController {
     }
 
     @GetMapping("/Produits/{id}")
+    @ApiOperation(value = "Récupère un produit grâce à son ID à condition que celui-ci soit en stock!")
     public Product afficherUnProduit(@PathVariable int id) {
         log.info("Affiche un produit");
         Product product = productDao.findById(id);
