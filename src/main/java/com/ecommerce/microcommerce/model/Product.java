@@ -1,11 +1,24 @@
 package com.ecommerce.microcommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import org.hibernate.validator.constraints.Length;
 
-@JsonFilter("filtreDynamique")
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.Min;
+
+//@JsonFilter("filtreDynamique")
+@Entity
 public class Product {
+    @Id
+    @GeneratedValue
     private int    id;
+
+    @Length(min = 3, max = 20, message = "Nom trop long ou trop court.")
     private String nom;
+
+    @Min(value = 1, message = "Le prix ne peut pas être négatif ou 0")
     private int    prix;
 
     //Information que je ne souhaite pas afficher
